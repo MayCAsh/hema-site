@@ -1,205 +1,478 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HEMA — Where Connections Begin</title>
+<!-- saved from url=(0029)https://joinhema.com/#circles -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-  <!-- Fraunces font -->
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HEMA — small circles that meet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+<link href="./HEMA — small circles that meet_files/css2" rel="stylesheet">
+<style>
+:root{
+  --bg:#efe9e2; --ink:#0e0b0a; --muted:#6e6a66;
+  --plum:#5d0b47; --plum2:#8b3572;
+  --gold-1:#f9e9b8; --gold-2:#f2cf6b; --gold-3:#d7a93b; --gold-4:#b3842a; --gold-5:#7a5a1a;
+  --border:1px solid rgba(0,0,0,.14); --shadow:0 8px 24px rgba(0,0,0,.08);
+  --max:1200px;
+}
+*{box-sizing:border-box} html,body{height:100%}
+body{ margin:0; background:var(--bg); color:var(--ink);
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+  font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; overflow-x:hidden }
+.container{ max-width:var(--max); margin:0 auto; padding:0 22px }
+.header{ max-width:var(--max); margin:0 auto; padding:16px 22px 0; display:flex; align-items:center; justify-content:space-between }
+.logo{ font-family:Fraunces, serif; font-weight:700; font-size:28px }
+.star{ width:44px; height:44px; border-radius:999px; border:var(--border); background:#fff; box-shadow:var(--shadow); position:relative }
+.star::before, .star::after{content:""; position:absolute; inset:0; margin:auto; width:2px; height:22px; background:#6d8a96}
+.star::after{ transform:rotate(90deg) }
 
-  <style>
-    :root { --font-serif: "Fraunces", serif; }
+.hero{ padding:6vh 0 4vh; text-align:center; position:relative; z-index:2 }
+.display{ font-family:Fraunces, serif; font-size:clamp(40px,7.4vw,108px); font-weight:700; line-height:1.02 }
+.display .thin{ font-weight:400 }
+.kicker{ color:var(--muted); margin:10px auto 0; max-width:640px }
+.cta{ margin:18px auto 0; display:flex; justify-content:center; gap:10px; flex-wrap:wrap }
+.btn{ border:var(--border); background:#fff; padding:10px 14px; border-radius:12px; font-weight:800; color:#111; text-decoration:none; box-shadow:var(--shadow) }
+.btn.primary{ background:linear-gradient(135deg,var(--plum),var(--plum2)); color:#fff; border-color:transparent }
+.stamp{ position:absolute; right:5%; top:36%; width:88px; height:88px; border-radius:999px; background:#fff; border:var(--border); box-shadow:var(--shadow); display:grid; place-items:center }
+.stamp svg{ width:56px; height:56px }
 
-    body {
-      margin: 0;
-      background-color: #fffdf7;
-      color: #2b1c0b;
-      font-family: var(--font-serif);
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
+/* SUNRISE with animated gold sheen */
+.sunrise-wrap{position:relative; z-index:1}
+.sunrise{
+  --sheen: linear-gradient(120deg, transparent 0%, rgba(255,255,255,.55) 12%, transparent 28%) 0 0/220% 100% no-repeat;
+  width:1280px; max-width:92vw; height:min(420px,42vw); margin:22px auto 0; border-top-left-radius:1000px; border-top-right-radius:1000px; position:relative;
+  background:
+    radial-gradient(120% 120% at 50% 6%, rgba(255,255,255,.6), transparent 52%),
+    linear-gradient(180deg,var(--gold-2),var(--gold-3) 60%,var(--gold-4));
+  box-shadow: inset 0 -40px 60px rgba(122,90,26,.18), inset 0 20px 40px rgba(255,255,255,.35);
+  overflow:hidden;
+}
+.sunrise::after{ content:""; position:absolute; inset:0; background:var(--sheen); animation:sheenMove 7s ease-in-out infinite; mix-blend-mode:screen; opacity:.65 }
+@keyframes sheenMove{ 0%{background-position:-120% 0} 50%{background-position:30% 0} 100%{background-position:120% 0} }
 
-    h1, h2, h3, .title { font-weight: 700; letter-spacing: -0.01em; }
-    h3, .badge, .pill, .btn, .card b { font-weight: 600; }
-    p, li, small, .subtitle { font-weight: 500; }
+/* Compact illustration INSIDE the sunrise */
+.illu-holder{ position:absolute; left:50%; bottom:8px; transform:translateX(-50%); width:min(760px,76%); max-height:70%; display:block }
+.illu-holder svg{ width:100%; height:auto; display:block; filter:drop-shadow(0 6px 18px rgba(0,0,0,.1)) }
 
-    .hero {
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      background: linear-gradient(to bottom, #fef9ef, #fffdf7);
-    }
+/* SECTIONS */
+.section{ padding:54px 0 36px; position:relative }
+.count{ font-family:Fraunces, serif; text-align:center; color:var(--muted); margin:0 0 6px }
+.title{ font-family:Fraunces, serif; text-align:center; font-size:clamp(34px,5.8vw,88px); line-height:1.04; margin:0 }
+.subtitle{ text-align:center; color:var(--muted); max-width:680px; margin:10px auto 16px; font-weight:600 }
+.badge{ display:inline-block; padding:.28rem .6rem; border-radius:999px; border:var(--border); background:#fff; color:#5d0b47; font-weight:800; font-size:.9rem }
+.section .center{ text-align:center }
+.section .btn{ margin-top:6px }
+.rule{ height:1px; width:90%; max-width:920px; background:linear-gradient(90deg, transparent, rgba(0,0,0,.12), transparent); margin:28px auto }
+.grid4{ display:grid; grid-template-columns:repeat(4,1fr); gap:12px; max-width:900px; margin:18px auto }
+.card{ background:#fff; border:var(--border); border-radius:16px; padding:14px 16px; box-shadow:var(--shadow); text-align:center }
+.card b{ font-family:Fraunces, serif; font-size:1.3rem }
+.card span{ color:var(--muted) }
+@media(max-width:900px){ .grid4{ grid-template-columns:1fr 1fr } }
+@media(max-width:560px){ .grid4{ grid-template-columns:1fr } .title{font-size:clamp(32px,9vw,56px)} }
+footer{ padding:60px 22px 80px; color:var(--muted) }
 
-    .hero h1 {
-      font-size: clamp(48px, 7vw, 92px);
-      color: #3b230b;
-    }
+/* GOLD FLUID LAYER */
+.gold-fluid{ position:fixed; inset:-6% -3% -6% -3%; z-index:0; pointer-events:none; overflow:hidden }
+.gold-fluid svg{ position:absolute; width:0; height:0 }
+.pool{ position:absolute; inset:-12% -12%; filter:url(#goo-gold) }
+.gdrop{
+  position:absolute; left:var(--x); top:var(--y);
+  width:var(--w); height:var(--h);
+  border-radius:40% 60% 55% 45% / 45% 38% 62% 55%;
+  background:
+    radial-gradient(120% 120% at 30% 28%, rgba(255,255,255,.92), rgba(255,255,255,.3) 40%, transparent 60%),
+    conic-gradient(from 10deg, var(--gold-1), var(--gold-2), var(--gold-3), var(--gold-2), var(--gold-1));
+  box-shadow: inset 0 -18px 36px rgba(122,90,26,.18), inset 0 10px 20px rgba(255,255,255,.35);
+  opacity:.55; mix-blend-mode:multiply;
+  animation: goldWobble var(--dur) ease-in-out infinite alternate, goldFloat var(--dur2) ease-in-out infinite;
+}
+@keyframes goldWobble{ 0%{border-radius:40% 60% 55% 45% / 45% 38% 62% 55%; transform:rotate(0)} 50%{border-radius:65% 35% 42% 58% / 38% 62% 48% 52%; transform:rotate(2deg)} 100%{border-radius:35% 65% 68% 32% / 60% 40% 70% 40%; transform:rotate(-2deg)} }
+@keyframes goldFloat{ 0%{transform:translate(0,0)} 100%{transform:translate(var(--dx),var(--dy))} }
+</style>
+<style>
+/* === GT4: Golden Thread (from half-sun, text on path, no people) === */
+:root{ --gt4-gold:#d4af37; --gt4-pdoc:0%; }
+#gt4-leftbar{position:fixed; left:10px; top:0; bottom:0; width:2px; pointer-events:none; opacity:.6; z-index:5;
+  background:linear-gradient(var(--gt4-gold) 0 var(--gt4-pdoc), transparent 0);}
+#gt4-rail{position:absolute; left:0; width:100vw; pointer-events:none; z-index:0;}
+#gt4-svg{display:block; width:100%; height:100%;}
+#gt4-geom{fill:none}
+#gt4-thread{fill:none; stroke:var(--gt4-gold); stroke-width:2; stroke-linecap:round; stroke-linejoin:round;
+  filter:drop-shadow(0 0 6px rgba(212,175,55,.45));}
+#gt4-dot{fill:var(--gt4-gold); filter:drop-shadow(0 0 10px rgba(212,175,55,.75))}
+#gt4-caption{font:600 clamp(18px,4.2vw,44px)/1.1 "Fraunces", ui-serif, system-ui, -apple-system, serif; fill:#fff;}
+/* Hide any 'people' illustrations around the sunrise block */
+.sunrise .illu-holder, .people, [data-people], .illustration-people { display:none !important; }
+/* === /GT4 === */
 
-    .hero p {
-      font-size: clamp(18px, 2vw, 22px);
-      color: #5a4632;
-      max-width: 640px;
-    }
 
-    /* Golden arc (sunrise) */
-    .sunrise {
-      position: relative;
-      height: 55vh;
-      background: radial-gradient(circle at 50% 110%, #f6e9b6 0%, #e8c56e 55%, #d4af37 90%);
-      border-top-left-radius: 100% 50%;
-      border-top-right-radius: 100% 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      overflow: hidden;
-    }
+/* === ARCT: Arc Title (centered in half-sun, fade-in) === */
+:root{ --arct-o:0; }
+.sunrise{position:relative} /* ensure we can absolutely position inside */
+#arct-wrap{position:absolute; inset:0; pointer-events:none; z-index:10; opacity:var(--arct-o); transition:opacity 2.5s ease;}
+#arct-inner{position:absolute; inset:0; display:flex; align-items:center; justify-content:center;}
+#arct-title{font:700 clamp(32px,5vw,64px)/1.05 "Fraunces", ui-serif, system-ui, -apple-system, serif; color:#fff; text-align:center; letter-spacing:-0.01em; text-shadow:0 2px 24px rgba(0,0,0,.25);} 
+/* === /ARCT === */
+:root{ --arct-o:0; }
+#arct-wrap{position:absolute; left:0; width:100%; height:45svh; min-height:260px; pointer-events:none; z-index:2; opacity:var(--arct-o); transition:opacity 2.5s ease;}
+#arct-inner{position:absolute; inset:0; display:flex; align-items:center; justify-content:center;}
+#arct-title{font:700 clamp(32px,5vw,64px)/1.05 "Fraunces", ui-serif, system-ui, -apple-system, serif; color:#fff; text-align:center; letter-spacing:-0.01em; text-shadow:0 2px 24px rgba(0,0,0,.25);}
+/* === /ARCT === */
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
 
-    /* WHY HEMA section inside arc */
-    #why-hema {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      pointer-events: none;
-      z-index: 10;
-    }
+<style>
+:root { --font-serif: "Fraunces", serif; }
+.main, .main *, section, footer {
+  font-family: var(--font-serif) !important;
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+/* Numbers look consistent */
+.count, .metric, .card b, .title, h1, h2, h3, .pill, .btn { font-variant-numeric: lining-nums; }
+/* Hierarchy */
+h1, h2, .title { font-weight: 700; letter-spacing: -0.01em; }
+h3, .badge, .pill, .btn, .card b { font-weight: 600; }
+p, li, small, .subtitle { font-weight: 500; }
+/* Why HEMA colors */
+#why-hema h2 { color:#a67c27; text-shadow:0 2px 18px rgba(0,0,0,.22); }
+#why-hema p { color:#5a4632; }
+/* Ensure sunrise is positioned for absolute children */
+.sunrise{ position:relative; }
+</style>
 
-    #why-hema .why-inner {
-      max-width: min(880px, 92vw);
-      padding: 0 16px;
-    }
-
-    #why-hema h2 {
-      color: #a67c27;
-      text-shadow: 0 2px 18px rgba(0,0,0,.22);
-      font-weight: 700;
-      font-size: clamp(34px, 5vw, 64px);
-      margin-bottom: 10px;
-    }
-
-    #why-hema p {
-      color: #5a4632;
-      font-size: clamp(16px,1.6vw,19px);
-      line-height: 1.6;
-      font-weight: 500;
-    }
-
-    /* Circles layout */
-    .section.container {
-      text-align: center;
-      padding: 80px 20px;
-      border-bottom: 1px solid #eee;
-    }
-
-    .badge {
-      display: inline-block;
-      background: #d4af37;
-      color: white;
-      border-radius: 999px;
-      padding: 6px 12px;
-      font-size: 14px;
-      margin-bottom: 12px;
-    }
-
-    .count {
-      font-variant-numeric: lining-nums;
-      font-size: 20px;
-      color: #3b230b;
-    }
-
-    .title {
-      font-size: 28px;
-      color: #3b230b;
-      margin: 10px 0;
-    }
-
-    .subtitle {
-      color: #5a4632;
-      max-width: 600px;
-      margin: 0 auto 20px;
-      font-size: 18px;
-      line-height: 1.6;
-    }
-
-    .btn.primary {
-      display: inline-block;
-      background: #d4af37;
-      color: white;
-      padding: 10px 22px;
-      border-radius: 999px;
-      text-decoration: none;
-      transition: background 0.3s ease;
-    }
-
-    .btn.primary:hover {
-      background: #b58b3a;
-    }
-  </style>
 </head>
+<body data-new-gr-c-s-check-loaded="14.1258.0" data-gr-ext-installed="">
 
-<body>
-  <section class="hero">
-    <h1>HEMA</h1>
-    <p>Because everyone deserves a village.</p>
-  </section>
+<!-- Liquid gold layer -->
+<div class="gold-fluid" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <filter id="goo-gold">
+        <fegaussianblur in="SourceGraphic" stdDeviation="14" result="blur"></fegaussianblur>
+        <fecolormatrix in="blur" mode="matrix" values="1 0 0 0 0
+                  0 1 0 0 0
+                  0 0 1 0 0
+                  0 0 0 18 -9" result="goo"></fecolormatrix>
+        <feblend in="SourceGraphic" in2="goo"></feblend>
+      </filter>
+    </defs>
+  </svg>
+  <div class="pool">
+    <span class="gdrop" style="--x:6%;  --y:68%; --w:420px; --h:360px; --dx:26vw; --dy:-18vh; --dur:22s; --dur2:44s;"></span>
+    <span class="gdrop" style="--x:58%; --y:12%; --w:340px; --h:300px; --dx:-20vw; --dy:20vh; --dur:24s; --dur2:40s;"></span>
+    <span class="gdrop" style="--x:22%; --y:18%; --w:360px; --h:320px; --dx:18vw; --dy:18vh; --dur:26s; --dur2:42s;"></span>
+    <span class="gdrop" style="--x:76%; --y:70%; --w:380px; --h:320px; --dx:-24vw; --dy:-18vh; --dur:28s; --dur2:46s;"></span>
+    <span class="gdrop" style="--x:40%; --y:82%; --w:320px; --h:280px; --dx:14vw; --dy:-22vh; --dur:30s; --dur2:48s;"></span>
+  </div>
+</div>
 
-  <div class="sunrise">
-    <!-- WHY HEMA (story-driven, inside golden arc) -->
-    <div id="why-hema" aria-label="Why HEMA">
-      <div class="why-inner">
-        <h2>Why HEMA</h2>
-        <p>
-          Friends are easy to make once. Showing up is the hard part.
-          HEMA builds small, high-trust circles that meet on a rhythm—
-          so you never lose momentum. It’s accountability without pressure,
-          support without performance, and progress you can actually feel together.
-        </p>
-      </div>
+<div class="main">
+<header class="header">
+  <div class="logo">HEMA</div>
+  <div class="star" aria-hidden="true"></div>
+</header>
+  
     </div>
   </div>
 
-  <!-- Example circles section -->
-  <section class="section container">
-    <div class="center"><span class="badge">Monthly</span></div>
-    <p class="count">1/8</p>
-    <h2 class="title">New Moms</h2>
-    <p class="subtitle">Gentle community and shared understanding for new mothers.</p>
-    <a class="btn primary" href="#join-moms">Join</a>
-  </section>
+  <!-- GT4: Golden Thread rail (text rides the line) -->
+  <div id="gt4-rail" aria-hidden="true">
+    <svg id="gt4-svg" viewBox="0 0 1000 1000" preserveAspectRatio="none">
+      <path id="gt4-geom" d="" />
+      <path id="gt4-thread" d="" />
+      <circle id="gt4-dot" r="6" cx="0" cy="0"></circle>
+      <text id="gt4-caption"><textPath id="gt4-textpath" href="#gt4-thread" startOffset="0%">Find your circle</textPath></text>
+    </svg>
+  </div>
 
-  <section class="section container">
-    <div class="center"><span class="badge">Monthly</span></div>
-    <p class="count">2/8</p>
-    <h2 class="title">New Dads</h2>
-    <p class="subtitle">A space for new fathers to share experiences and grow together.</p>
-    <a class="btn primary" href="#join-dads">Join</a>
-  </section>
 
-  <section class="section container">
-    <div class="center"><span class="badge">Monthly</span></div>
-    <p class="count">3/8</p>
-    <h2 class="title">Founders &amp; Business Owners</h2>
-    <p class="subtitle">Accountability, strategy &amp; support with peers building real things.</p>
-    <a class="btn primary" href="#join-founders">Join</a>
-  </section>
+<section class="hero container">
+  <h1 class="display">HEMA<br><span class="thin">Because Everyone</span><br>Deserves a VILLAGE</h1>
+  <p class="kicker">Small, high-trust circles that meet on a rhythm. Join a group that fits your season and keep showing up.</p>
+  <div class="cta">
+    <a class="btn primary" href="https://joinhema.com/#circles">Explore circles</a>
+    <a class="btn" href="https://wa.me/254710314003" target="_blank" rel="noopener">WhatsApp us</a>
+  </div>
+  <div class="stamp" aria-hidden="true">
+    <svg viewBox="0 0 64 64" fill="none" stroke="#222" stroke-width="3" stroke-linecap="round">
+      <circle cx="32" cy="32" r="28"></circle>
+      <circle cx="24" cy="26" r="3" fill="#222" stroke="none"></circle>
+      <circle cx="40" cy="26" r="3" fill="#222" stroke="none"></circle>
+      <path d="M20 38 q12 8 24 0"></path>
+    </svg>
+  </div>
+</section>
 
-  <section class="section container">
-    <div class="center"><span class="badge">Monthly</span></div>
-    <p class="count">4/8</p>
-    <h2 class="title">New to the City</h2>
-    <p class="subtitle">Meet others who are exploring, settling in, and finding their circle.</p>
-    <a class="btn primary" href="#join-city">Join</a>
-  </section>
+\1
 
-  <footer style="text-align:center; padding:40px 0; color:#8a6e1a;">
-    <p>© 2025 HEMA — Building Circles That Last</p>
-  </footer>
-</body>
-</html>
+  
+    </div>
+  </div>
+  <!-- /ARCT -->
+
+  <div class="sunrise" aria-hidden="true">
+
+  <!-- WHY HEMA (story-driven, inside golden arc) -->
+  <div id="why-hema" aria-label="Why HEMA" style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; text-align:center; pointer-events:none; z-index:10;">
+    <div class="why-inner" style="max-width:min(880px,92vw); padding:0 16px;">
+      <h2>Why HEMA</h2>
+      <p>
+        Friends are easy to make once. Showing up is the hard part. HEMA builds small, high‑trust circles
+        that meet on a rhythm—so you never lose momentum. It’s accountability without pressure, support
+        without performance, and progress you can actually feel together.
+      </p>
+    </div>
+  </div>
+  <!-- /WHY HEMA -->
+
+    <!-- Friendly compact illustration -->
+    <div class="illu-holder">
+      <svg viewBox="0 0 900 260" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <lineargradient id="shirt" x1="0" x2="1" y1="0" y2="1">
+            <stop offset="0" stop-color="#ffd3e5"></stop>
+            <stop offset="1" stop-color="#b95bd1"></stop>
+          </lineargradient>
+        </defs>
+        <g stroke="#5d0b47" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none">
+          <circle cx="160" cy="140" r="30" fill="#fff"></circle>
+          <circle cx="300" cy="120" r="28" fill="#fff"></circle>
+          <circle cx="440" cy="150" r="34" fill="#fff"></circle>
+          <circle cx="580" cy="130" r="30" fill="#fff"></circle>
+          <circle cx="720" cy="150" r="32" fill="#fff"></circle>
+          <path d="M140 210 h40 v-34" fill="url(#shirt)"></path>
+          <path d="M280 210 h40 v-30" fill="url(#shirt)"></path>
+          <path d="M420 210 h42 v-36" fill="url(#shirt)"></path>
+          <path d="M560 210 h40 v-28" fill="url(#shirt)"></path>
+          <path d="M700 210 h44 v-34" fill="url(#shirt)"></path>
+          <path d="M150 150 q10 12 20 0"></path>
+          <path d="M290 130 q10 10 20 0"></path>
+          <path d="M430 160 q12 10 24 0"></path>
+          <path d="M570 140 q10 10 20 0"></path>
+          <path d="M710 160 q12 10 24 0"></path>
+        </g>
+        <g fill="#fff" stroke="none" opacity=".6">
+          <circle cx="110" cy="120" r="5"></circle>
+          <circle cx="820" cy="130" r="5"></circle>
+          <circle cx="640" cy="90" r="4"></circle>
+        </g>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<section id="circles" class="section container">
+  <div class="center"><span class="badge">Bi weekly</span></div>
+  <p class="count">1/8</p>
+  <h2 class="title">New Moms</h2>
+  <p class="subtitle">0 to 18 months</p>
+  <div class="center"><a class="btn primary" href="https://forms.gle/JFw6HRcjZ95sdXRs7" target="_blank" rel="noopener">Join</a></div>
+</section>
+<div class="rule"></div>
+
+<section class="section container">
+  <div class="center"><span class="badge">Monthly</span></div>
+  <p class="count">2/8</p>
+  <h2 class="title">New Dads</h2>
+  <p class="subtitle">Routines and real talk</p>
+  <div class="center"><a class="btn primary" href="https://forms.gle/JFw6HRcjZ95sdXRs7" target="_blank" rel="noopener">Join</a></div>
+</section>
+
+<section class="section container">
+  <div class="center"><span class="badge">Monthly</span></div>
+  <p class="count">3/8</p>
+  <h2 class="title">Founders &amp; Business Owners</h2>
+  <p class="subtitle">Accountability, strategy &amp; support with peers building real things.</p>
+  <div class="center"><a class="btn primary" href="https://forms.gle/JFw6HRcjZ95sdXRs7" target="_blank" rel="noopener">Join</a></div>
+</section>
+<div class="rule"></div>
+
+<div class="rule"></div>
+
+<section class="section container">
+  <div class="center"><span class="badge">Bi weekly</span></div>
+  <p class="count">4/8</p>
+  <h2 class="title">New to the City</h2>
+  <p class="subtitle">Meet locals and newcomers</p>
+  <div class="center"><a class="btn primary" href="https://forms.gle/JFw6HRcjZ95sdXRs7" target="_blank" rel="noopener">Join</a></div>
+</section>
+<div class="rule"></div>
+
+<section class="section container">
+  <div class="center"><span class="badge">Monthly</span></div>
+  <p class="count">5/8</p>
+  <h2 class="title">Book Club</h2>
+  <p class="subtitle">One title with prompts</p>
+  <div class="center"><a class="btn primary" href="https://forms.gle/JFw6HRcjZ95sdXRs7" target="_blank" rel="noopener">Join</a></div>
+</section>
+<div class="rule"></div>
+
+<section class="section container">
+  <div class="center"><span class="badge">Weekly</span></div>
+  <p class="count">6/8</p>
+  <h2 class="title">Running</h2>
+  <p class="subtitle">Beginner friendly loops</p>
+  <div class="center"><a class="btn primary" href="https://forms.gle/JFw6HRcjZ95sdXRs7" target="_blank" rel="noopener">Join</a></div>
+</section>
+<div class="rule"></div>
+
+<section class="section container">
+  <div class="center"><span class="badge">Monthly</span></div>
+  <p class="count">7/8</p>
+  <h2 class="title">Car &amp; 4x4</h2>
+  <p class="subtitle">Mods and weekend trails</p>
+  <div class="center"><a class="btn primary" href="https://forms.gle/JFw6HRcjZ95sdXRs7" target="_blank" rel="noopener">Join</a></div>
+</section>
+<div class="rule"></div>
+
+<section class="section container">
+  <div class="center"><span class="badge">We match you</span></div>
+  <p class="count">8/8</p>
+  <h2 class="title">Other</h2>
+  <p class="subtitle">Tell us what you want</p>
+  <div class="center"><a class="btn primary" href="https://forms.gle/JFw6HRcjZ95sdXRs7" target="_blank" rel="noopener">Request</a></div>
+</section>
+
+<section class="section container" id="expect">
+  <h2 class="title" style="font-size:clamp(30px,4vw,56px)">What to expect</h2>
+  <div class="grid4">
+    <div class="card"><b>6–12</b><span> people per circle</span></div>
+    <div class="card"><b>2–4 wks</b><span> recurring cadence</span></div>
+    <div class="card"><b>1 host</b><span> keeps things flowing</span></div>
+    <div class="card"><b>Switch</b><span> re-match if not a fit</span></div>
+  </div>
+  <div class="center" style="margin-top:8px">
+    <a class="btn" href="https://forms.gle/D4gHBBH3AxPDFym76" target="_blank" rel="noopener">Become a host</a>
+    <a class="btn" href="https://wa.me/254710314003" target="_blank" rel="noopener">WhatsApp us</a>
+  </div>
+</section>
+
+<footer class="container">
+  <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap">
+    <div class="logo">HEMA</div>
+    <div style="color:var(--muted)">© 2025 HEMA. Small, high-trust circles that meet regularly.</div>
+  </div>
+</footer>
+</div>
+
+
+
+<!-- GT4: Golden Thread JS -->
+<script>
+(function(){
+  const $ = s=>document.querySelector(s);
+  // add left progress bar once
+  if(!$('#gt4-leftbar')){ const b=document.createElement('div'); b.id='gt4-leftbar'; document.body.appendChild(b); }
+
+  const rail = $('#gt4-rail'), svg = $('#gt4-svg');
+  const geom = $('#gt4-geom'), thread = $('#gt4-thread'), dot = $('#gt4-dot'), tpath = $('#gt4-textpath');
+  // hero / sunrise container
+  const hero = document.querySelector('header, .hero') || document.querySelector('.sunrise') || document.body.firstElementChild;
+  if(!rail || !svg || !geom || !thread || !tpath) return;
+
+  function layout(){
+    // anchor rail top to hero bottom (half-sun baseline)
+    const hb = hero ? (window.scrollY + hero.getBoundingClientRect().bottom) : 0;
+    rail.style.top = hb + 'px';
+    const docH = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+    const h = Math.max(600, docH - hb);
+    rail.style.height = h + 'px';
+    const w = window.innerWidth;
+    svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+
+    // start from center x, drift to left rail (~12% width), then meander down
+    const cx = w * 0.5;
+    const rx = Math.max(70, Math.min(160, w * 0.12));
+    const y0=20, y1=Math.min(200,h*0.2), y2=Math.min(520,h*0.45), y3=Math.max(h-40, y2+200);
+    const d = [
+      `M ${cx},${y0}`,
+      `C ${cx+120},${y0-30} ${rx+80},${y1-60} ${rx},${y1}`,
+      `S ${rx-60},${y2-60} ${rx},${y2}`,
+      `S ${rx+60},${(y2+y3)/2} ${rx},${y3}`
+    ].join(' ');
+    geom.setAttribute('d', d);
+    thread.setAttribute('d', d);
+  }
+
+  function localProgress(){
+    const hb = hero ? (window.scrollY + hero.getBoundingClientRect().bottom) : 0;
+    const max = (document.body.scrollHeight - window.innerHeight) - hb;
+    if(max <= 0) return 0;
+    return Math.min(1, Math.max(0, (window.scrollY - hb) / max));
+  }
+
+  function update(){
+    const p = localProgress();
+    const L = thread.getTotalLength();
+    // stroke reveal
+    thread.style.strokeDasharray = L;
+    thread.style.strokeDashoffset = (1 - p) * L;
+    // dot position
+    const pt = thread.getPointAtLength(Math.max(0.01, Math.min(0.99, p)) * L);
+    dot.setAttribute('cx', pt.x); dot.setAttribute('cy', pt.y);
+    // text riding the path — offset a bit ahead of dot to avoid overlap
+    const offsetPct = Math.max(0, Math.min(90, p*100 + 3));
+    tpath.setAttribute('startOffset', offsetPct + '%');
+
+    // global left progress to bottom of page
+    const maxDoc = (document.body.scrollHeight - window.innerHeight);
+    const pDoc = maxDoc>0 ? Math.max(0, Math.min(1, window.scrollY / maxDoc)) : 0;
+    document.documentElement.style.setProperty('--gt4-pdoc', (pDoc*100)+'%');
+  }
+
+  function init(){ layout(); update(); }
+  addEventListener('resize', init);
+  addEventListener('scroll', update, {passive:true});
+  addEventListener('load', init);
+  init();
+})();
+</script>
+
+
+<script>
+(function(){
+  const wrap = document.getElementById('arct-wrap');
+  if(!wrap) return;
+  const hero = document.querySelector('header, .hero') || document.querySelector('.sunrise') || document.body.firstElementChild;
+  function position(){
+    const hb = hero ? (window.scrollY + hero.getBoundingClientRect().bottom) : 0;
+    wrap.style.top = hb + 'px';
+  }
+  function show(v){ document.documentElement.style.setProperty('--arct-o', v); }
+  if(hero){
+    const obs = new IntersectionObserver(es=>{
+      const vis = es[0]?.intersectionRatio || 0;
+      // Reveal once hero is < 55% in view
+      if(vis < 0.55){ show(1); } else { show(0); }
+    }, {threshold:[0,0.55,1]});
+    obs.observe(hero);
+  } else { show(1); }
+  addEventListener('resize', position);
+  addEventListener('load', position);
+  position();
+})();
+</script>
+
+</body><grammarly-desktop-integration data-grammarly-shadow-root="true"><template shadowrootmode="open"><style>
+      div.grammarly-desktop-integration {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select:none;
+        user-select:none;
+      }
+
+      div.grammarly-desktop-integration:before {
+        content: attr(data-content);
+      }
+    </style><div aria-label="grammarly-integration" role="group" tabindex="-1" class="grammarly-desktop-integration" data-content="{&quot;mode&quot;:&quot;full&quot;,&quot;isActive&quot;:true,&quot;isUserDisabled&quot;:false}"></div></template></grammarly-desktop-integration></html>
