@@ -70,6 +70,40 @@ body{ margin:0; background:var(--bg); color:var(--ink);
 @media(max-width:900px){ .grid4{ grid-template-columns:1fr 1fr } }
 @media(max-width:560px){ .grid4{ grid-template-columns:1fr } .title{font-size:clamp(32px,9vw,56px)} }
 footer{ padding:60px 22px 80px; color:var(--muted) }
+  /* --- Mobile polish & fraction fix --- */
+.count { 
+  display:block; 
+  text-align:center; 
+  white-space: nowrap; 
+  margin: 8px 0;
+}
+.count::before, .count::after { content: none !important; }
+
+@media (max-width: 600px){
+  .sunrise { height: 46vh; }
+  #why-hema .why-inner { padding: 0 20px; }
+  #why-hema h2 { 
+    font-size: clamp(24px, 7vw, 36px); 
+    line-height: 1.15; 
+    color: #9c7823; 
+    text-shadow: 0 1px 12px rgba(0,0,0,.22);
+  }
+  #why-hema p { 
+    font-size: clamp(14px, 4vw, 17px); 
+    line-height: 1.55; 
+    color: #4e3f30;
+  }
+  .section.container { padding: 48px 16px; }
+  .title { font-size: clamp(22px, 6.8vw, 30px); line-height: 1.12; }
+  .subtitle { font-size: clamp(14px, 4.2vw, 17px); }
+  .badge { font-size: 13px; padding: 4px 10px; }
+  .btn { font-size: 15px; padding: 8px 18px; }
+}
+
+@media (max-width: 600px){
+  #gt4-leftbar { display: none !important; }
+}
+
 
 /* GOLD FLUID LAYER */
 .gold-fluid{ position:fixed; inset:-6% -3% -6% -3%; z-index:0; pointer-events:none; overflow:hidden }
