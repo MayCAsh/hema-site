@@ -1,46 +1,25 @@
-# HEMA
+# HEMA and NAIROBABA
 
-HEMA is an interactive community website for new mums, new dads, co-parents and parents arriving together.
+This package contains the complete HEMA website and its NAIROBABA section.
 
-## Deploy to Netlify
+## GitHub structure
 
-### Recommended method
+Upload the contents of this folder to the root of the existing GitHub repository.
+The repository should show `app` and `public` as folders beside `package.json`.
 
-1. Unzip this package.
-2. Upload the folder to a new GitHub repository.
-3. In Netlify, select **Add new project** and then **Import an existing project**.
-4. Connect the repository.
-5. Netlify should detect Next.js automatically. Confirm:
-   - Build command: `npm run build`
-   - Publish directory: `.next`
-   - Node version: `22`
-6. Select **Deploy**.
+Do not upload the ZIP itself.
 
-Netlify automatically applies its maintained OpenNext adapter. Do not install or pin the legacy `@netlify/plugin-nextjs` package.
+## Netlify settings
 
-## Run locally
+- Build command: `npm run build`
+- Publish directory: `out`
+- Node version: `22`
 
-```bash
-npm install
-npm run dev
-```
+The included `netlify.toml` supplies these settings automatically.
 
-Open `http://localhost:3000`.
+## Routes
 
-## Included
+- HEMA: `/`
+- NAIROBABA: `/nairobaba/`
 
-- Responsive desktop and mobile layouts.
-- Reduced-motion accessibility support.
-- Interactive Mum, Dad and Both frequencies.
-- Night-to-morning scroll journey.
-- Interactive 3AM neighbourhood wall.
-- Original HEMA parent photography.
-- Parent activity signals and micro-messages.
-- Optional ambient room tone.
-- Pulsing HEMA signal mark.
-
-## Notes
-
-- The email form currently shows an on-page confirmation and does not send data to a mailing platform.
-- The 3AM Wall notes are stored only for the visitor's current browser session and are not saved to a database.
-- Connect these forms to your preferred email and community platforms before launch.
+The signup forms remain connected to the existing HEMA Google Apps Script.

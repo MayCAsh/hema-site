@@ -1,6 +1,6 @@
 node_modules
 .next
+out
 .netlify
 .env*
-!.env.example
 npm-debug.log*
