@@ -1,5 +1,7 @@
 "use client";
 
+/* eslint-disable @next/next/no-img-element */
+
 import { CSSProperties, FormEvent, PointerEvent, useEffect, useRef, useState } from "react";
 import "./wall.css";
 
@@ -11,21 +13,21 @@ const arrivals: Record<Arrival, { eyebrow: string; frequency: string; color: str
     frequency: "88.3 FM",
     color: "#f2bd68",
     line: "I love this baby. I miss being asked about me.",
-    detail: "Recovery, identity, feeding and friendship with people who see the person behind mum.",
+    detail: "Recovery, feeding, identity, and people who remember there is still a whole person behind “mum.”",
   },
   DAD: {
     eyebrow: "DAD / 2:41 AM",
     frequency: "94.1 FM",
     color: "#94bed6",
-    line: "I am a parent too. I do not have to know everything yet.",
-    detail: "Connection, confidence and honest support that never treats dad like the assistant.",
+    line: "I love being his dad. I still feel like I am guessing half the time.",
+    detail: "Other dads who will not treat you like the assistant or expect you to have every answer.",
   },
   BOTH: {
     eyebrow: "BOTH / 4:02 AM",
     frequency: "101.7 FM",
     color: "#df7761",
-    line: "Same baby. Same home. Two completely different nights.",
-    detail: "Somewhere to remember you are on the same side, without pretending it is always easy.",
+    line: "We are on the same team. It just does not always feel like it at 4am.",
+    detail: "A place to talk honestly, reset, and remember that both of you are tired.",
   },
 };
 
@@ -46,10 +48,49 @@ const starterNotes = [
 ];
 
 const rooms = [
-  ["01", "THE 3AM ROOM", "Open when the question feels too small for a professional and too real for the family chat."],
-  ["02", "PARENT CIRCLES", "Small groups matched by stage. Join alone, together, late or with the baby awake."],
-  ["03", "OUT IN THE WORLD", "Coffee walks, mum dinners, dad mornings and gatherings where leaving early still counts."],
+  ["01", "THE 3AM ROOM", "For the question you have searched three times and still do not want to put in the family chat."],
+  ["02", "PARENT CIRCLES", "Small groups with parents at the same stage. Join alone, together, late, or with the baby still awake."],
+  ["03", "OUT IN THE WORLD", "Coffee walks, mum dinners and dad mornings. Arriving late or leaving early is completely normal."],
 ];
+
+function HemaCursor() {
+  const [point, setPoint] = useState({ x: -30, y: -30 });
+  const [label, setLabel] = useState("");
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
+    if (!finePointer.matches) return;
+
+    const move = (event: globalThis.PointerEvent) => {
+      setPoint({ x: event.clientX, y: event.clientY });
+      setVisible(true);
+      const target = event.target as HTMLElement;
+      const interactive = target.closest<HTMLElement>("[data-cursor], a, button, input, textarea");
+      const typing = interactive?.matches("input, textarea");
+      setLabel(interactive?.dataset.cursor ?? (typing ? "TYPE" : interactive ? "OPEN" : ""));
+    };
+    const leave = () => setVisible(false);
+
+    window.addEventListener("pointermove", move);
+    document.documentElement.addEventListener("mouseleave", leave);
+    return () => {
+      window.removeEventListener("pointermove", move);
+      document.documentElement.removeEventListener("mouseleave", leave);
+    };
+  }, []);
+
+  return (
+    <div
+      className={`h-hema-cursor ${visible ? "visible" : ""} ${label ? "active" : ""}`}
+      style={{ transform: `translate3d(${point.x}px, ${point.y}px, 0)` }}
+      aria-hidden="true"
+    >
+      <span />
+      <small>{label}</small>
+    </div>
+  );
+}
 
 export default function Home() {
   const [menu, setMenu] = useState(false);
@@ -72,9 +113,13 @@ export default function Home() {
   const audioRef = useRef<{ context: AudioContext; source: AudioBufferSourceNode } | null>(null);
 
   useEffect(() => {
-    setNow(new Date());
-    const timer = setInterval(() => setNow(new Date()), 1000);
-    return () => clearInterval(timer);
+    const updateClock = () => setNow(new Date());
+    const starter = window.setTimeout(updateClock, 0);
+    const timer = window.setInterval(updateClock, 1000);
+    return () => {
+      window.clearTimeout(starter);
+      window.clearInterval(timer);
+    };
   }, []);
 
   useEffect(() => {
@@ -183,14 +228,24 @@ export default function Home() {
 
   return (
     <main className="h-site" ref={pageRef}>
+      <HemaCursor />
       <header className="h-nav">
         <a className="h-logo" href="#top" aria-label="HEMA home">H<span>E</span>MA<i className="h-logo-signal" /></a>
-        <button className="h-menu" type="button" onClick={() => setMenu(current => !current)}>{menu ? "CLOSE" : "MENU"}</button>
-        <nav className={menu ? "open" : ""}>
-          <a href="#story">OUR NIGHT</a>
-          <a href="#wall">THE WALL</a>
-          <a href="#inside">INSIDE</a>
-          <a className="h-nav-join" href="#join">COME IN</a>
+        <button
+          className="h-menu"
+          type="button"
+          aria-expanded={menu}
+          aria-controls="hema-navigation"
+          onClick={() => setMenu(current => !current)}
+        >
+          {menu ? "CLOSE" : "MENU"}
+        </button>
+        <nav id="hema-navigation" className={menu ? "open" : ""}>
+          <a href="#story" onClick={() => setMenu(false)}>OUR NIGHT</a>
+          <a href="#wall" onClick={() => setMenu(false)}>THE WALL</a>
+          <a href="#inside" onClick={() => setMenu(false)}>INSIDE</a>
+          <a href="/nairobaba/" onClick={() => setMenu(false)}>FOR DADS</a>
+          <a className="h-nav-join" href="#join" onClick={() => setMenu(false)}>COME IN</a>
         </nav>
       </header>
 
@@ -209,7 +264,7 @@ export default function Home() {
         <div className="h-night-copy">
           <p className="h-kicker">HEMA / THE NEW PARENT NIGHT LIGHT</p>
           <h1>Someone<br />else is<br /><em>awake.</em></h1>
-          <p className="h-intro">A free living community for new mums, new dads and parents figuring it out together.</p>
+          <p className="h-intro">For new mums, new dads, and the nights when everyone is asleep except you and the baby.</p>
           <div className="h-live-dial" aria-label="Live HEMA parent frequencies">
             <span>LIVE PARENT FREQUENCIES</span>
             {(["MUM", "DAD", "BOTH"] as Arrival[]).map(item => <a key={item} href="#story" onClick={() => setArrival(item)}><i />{item} <b>{arrivals[item].frequency}</b></a>)}
@@ -228,10 +283,10 @@ export default function Home() {
             <span>{awake ? "YOUR LIGHT IS ON" : holding ? "KEEP HOLDING" : "PRESS AND HOLD — I’M AWAKE TOO"}</span>
             <i aria-hidden="true" />
           </button>
-          {awake && <p className="h-awake-note">There you are. The night is a little brighter now.</p>}
+          {awake && <p className="h-awake-note">There you are. You are not the only one up.</p>}
         </div>
         <a className="h-scroll" href="#story"><span>SCROLL INTO THE NIGHT</span><i>↓</i></a>
-        <div className="h-night-caption">No perfect parents.<br />Just people, awake.</div>
+        <div className="h-night-caption">No perfect parents.<br />Just people getting through the night.</div>
         <div className="h-night-routes"><a href="#documentary">FIELD NOTES ↘</a><a href="#wall">LIT WINDOWS ↘</a></div>
         <div className="h-parent-signals" aria-label="Other parents awake now">
           {parentSignals.map(([label, message], index) => <button key={label} type="button" style={{ "--signal-index": index } as CSSProperties} onClick={() => setSignalMessage(message)}><i /><span>{label}</span></button>)}
@@ -243,7 +298,7 @@ export default function Home() {
         <div className="h-story-heading">
           <p className="h-kicker">03:17 / THE SMALL HOURS</p>
           <h2>The baby has a village.<br /><em>You should too.</em></h2>
-          <p>Everyone asks how the baby is doing. HEMA begins with the person holding them.</p>
+          <p>Everyone asks about the baby. We want to know how you are doing too.</p>
         </div>
         <div className="h-constellation">
           <div className="h-orbit orbit-one" aria-hidden="true" />
@@ -268,8 +323,8 @@ export default function Home() {
       <section className="h-dawn" data-reveal data-time="morning">
         <div className="h-dawn-sun" aria-hidden="true"><span /></div>
         <p className="h-kicker">05:52 / THE LIGHT CHANGES</p>
-        <h2>You do not have to<br />do this part <em>alone.</em></h2>
-        <p className="h-dawn-copy">HEMA turns the private hours of early parenthood into real friendship, useful support and places to go when you are ready.</p>
+        <h2>By morning, you should<br />have <em>someone to text.</em></h2>
+        <p className="h-dawn-copy">We start online in the hours that feel longest, then move into real conversations, coffee, walks, and people you can actually call.</p>
         <a href="#inside">SEE WHAT IS INSIDE <span>↘</span></a>
         <span className="h-scribble scribble-dawn">we survived tonight.</span>
       </section>
@@ -283,10 +338,25 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="h-nairobaba" id="for-dads" data-reveal>
+        <img src="/nairobaba/village-table-hero.png" alt="" aria-hidden="true" />
+        <div className="h-nairobaba-shade" aria-hidden="true" />
+        <div className="h-nairobaba-copy">
+          <p className="h-kicker">FROM HEMA / FOR FATHERS</p>
+          <h2>There is a chair<br />for <em>Baba.</em></h2>
+          <p>NAIROBABA is the fathers’ side of HEMA: walks, late-night chats, Sunday tables, and other dads who will not expect you to have it all figured out.</p>
+          <a href="/nairobaba/">PULL UP A CHAIR <span>↗</span></a>
+        </div>
+        <div className="h-nairobaba-mark" aria-label="NAIROBABA">
+          NAIRO<span>B</span>ABA
+          <small>A HEMA COMMUNITY</small>
+        </div>
+      </section>
+
       <section className="h-wall" id="wall" data-reveal>
         <header>
           <div><p className="h-kicker">ANONYMOUS / HONEST / OPEN ALL NIGHT</p><h2>The 3AM Wall.</h2></div>
-          <p>Leave the sentence that does not fit in the family group chat. Every note makes the night a little less lonely.</p>
+          <p>Say the thing you typed, deleted, and decided not to send to the family WhatsApp. Your name stays off it.</p>
         </header>
         <div className="h-city" aria-label="Lights left on by other parents">
           {notes.slice(0, 5).map((note, index) => (
@@ -305,31 +375,31 @@ export default function Home() {
       </section>
 
       <section className="h-inside" id="inside" data-reveal>
-        <header><p className="h-kicker">AFTER THE NIGHT</p><h2>Somewhere<br />to belong.</h2><p>Come as Mum. Come as Dad. Come together. Come tired. HEMA meets you where you are.</p></header>
+        <header><p className="h-kicker">AFTER THE NIGHT</p><h2>People to call.<br />Places to go.</h2><p>Come alone, with your partner, or with the baby asleep on your chest. Stay for ten minutes or stay longer.</p></header>
         <div className="h-rooms">
           {rooms.map(room => <article key={room[0]}><span>{room[0]}</span><h3>{room[1]}</h3><p>{room[2]}</p><a href="#join">ENTER <b>↗</b></a></article>)}
         </div>
       </section>
 
       <section className="h-membership" data-reveal>
-        <div><p className="h-kicker">START WHERE YOU ARE</p><h2>Free, because<br />the village <em>should be.</em></h2></div>
+        <div><p className="h-kicker">START WHERE YOU ARE</p><h2>Free, because<br />you already have <em>enough to pay for.</em></h2></div>
         <article className="h-free-card">
-          <div><span>HEMA FOUNDING COMMUNITY</span><strong>FREE TO JOIN</strong><p>Because new parents need fewer barriers and more people who understand.</p></div>
+          <div><span>HEMA FOUNDING COMMUNITY</span><strong>FREE TO JOIN</strong><p>Join the founding list. We will tell you what is happening, where, and when.</p></div>
           <ul><li>The 3AM Wall and open rooms</li><li>Parent circles and field notes</li><li>Selected sessions and gatherings</li><li>Join alone, with a partner or co-parent</li></ul>
           <a href="#join">COME INTO HEMA <b>↗</b></a>
         </article>
-        <p className="h-membership-note">No price. No perfect attendance. Come back whenever you need the village.</p>
+        <p className="h-membership-note">Miss a week. Come back when you need us. Nobody is taking attendance.</p>
       </section>
 
       <section className="h-work" data-reveal>
         <p className="h-kicker">HEMA BEYOND THE WALL</p>
-        <h2>Built for parents.<br />Useful to the world around them.</h2>
-        <div><a href="mailto:work@hema.community"><span>FOR EMPLOYERS</span><strong>HEMA AT WORK</strong><i>Parental-leave and return-to-work support ↗</i></a><a href="mailto:partners@hema.community"><span>FOR GOOD BRANDS + PEOPLE</span><strong>HEMA PARTNERS</strong><i>Practitioners, venues and useful collaborations ↗</i></a></div>
+        <h2>Support that follows parents<br />back into the world.</h2>
+        <div><a href="mailto:work@hema.community"><span>FOR EMPLOYERS</span><strong>HEMA AT WORK</strong><i>Parental-leave and return-to-work support ↗</i></a><a href="mailto:partners@hema.community"><span>FOR GOOD BRANDS + PEOPLE</span><strong>HEMA PARTNERS</strong><i>Practitioners, venues, and partnerships parents will actually use ↗</i></a></div>
       </section>
 
       <section className="h-join" id="join" data-reveal>
-        <div><p className="h-kicker">THE LIGHT IS STILL ON</p><h2>Come as<br />you are.</h2><p>Tired counts.</p></div>
-        {joined ? <div className="h-joined"><span>WELCOME TO HEMA</span><strong>You are not doing this alone.</strong><p>We saved {email} to the HEMA founding community list.</p></div> : <form onSubmit={join}><label htmlFor="email">START WITH YOUR EMAIL</label><input id="email" name="email" type="email" required autoComplete="email" value={email} onChange={event => setEmail(event.target.value)} placeholder="you@stillawake.com" /><input className="h-honeypot" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" /><button disabled={joining}>{joining ? "SAVING YOUR PLACE…" : "COME INTO HEMA"} <span>{joining ? "·" : "↗"}</span></button>{joinError && <p className="h-form-error" role="alert">{joinError}</p>}<small>By joining, you agree to receive HEMA community updates. You can leave at any time.</small></form>}
+        <div><p className="h-kicker">THE LIGHT IS STILL ON</p><h2>Come as<br />you are.</h2><p>Tired is fine.</p></div>
+        {joined ? <div className="h-joined"><span>WELCOME TO HEMA</span><strong>You are on the list.</strong><p>We will write to {email} when there is something worth knowing about.</p></div> : <form onSubmit={join}><label htmlFor="email">START WITH YOUR EMAIL</label><input id="email" name="email" type="email" required autoComplete="email" value={email} onChange={event => setEmail(event.target.value)} placeholder="you@stillawake.com" /><input className="h-honeypot" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" /><button disabled={joining}>{joining ? "SAVING YOUR PLACE…" : "COME INTO HEMA"} <span>{joining ? "·" : "↗"}</span></button>{joinError && <p className="h-form-error" role="alert">{joinError}</p>}<small>By joining, you agree to receive HEMA community updates. You can leave at any time.</small></form>}
       </section>
 
       <footer><a className="h-logo" href="#top">H<span>E</span>MA</a><p>THE NEW PARENT NIGHT LIGHT</p><p>© 2026 / STILL AWAKE</p></footer>
