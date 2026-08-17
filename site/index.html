@@ -9,6 +9,26 @@
     />
     <link rel="icon" href="/favicon.svg" />
     <title>HEMA | Your Village Should Grow Too</title>
+    <script>
+  document.addEventListener(
+    "submit",
+    function (event) {
+      var form = event.target;
+      if (!(form instanceof HTMLFormElement)) return;
+
+      var honeypot = form.querySelector(
+        "input.join-honeypot[name='website']"
+      );
+
+      if (!honeypot) return;
+
+      honeypot.value = "";
+      honeypot.setAttribute("value", "");
+      honeypot.readOnly = true;
+    },
+    true
+  );
+</script>
     <script type="module" crossorigin src="/assets/index-_W2dK2d0.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-apoxATjg.css">
   </head>
